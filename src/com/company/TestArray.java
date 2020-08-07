@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.sortArray.SortArray;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TestArray {
@@ -12,7 +14,7 @@ public class TestArray {
         test_arr = new int[array_size];
 
         for (int i = 0; i < array_size; i++) {
-            test_arr[i] = ThreadLocalRandom.current().nextInt(0, 1000);
+            test_arr[i] = ThreadLocalRandom.current().nextInt(0, 10000);
         }
     }
 
@@ -46,5 +48,14 @@ public class TestArray {
             System.out.println(test_arr[i]);
         }
         System.out.println("===============");
+    }
+
+    public static void testSpeedSort(SortArray obj) {
+        TimeExecute timer = new TimeExecute();
+        timer.startTimer();
+        obj.sort();
+        timer.stopTimer();
+
+        System.out.println(obj.getClass().getSimpleName()+": "+timer.getTimeExecute());
     }
 }

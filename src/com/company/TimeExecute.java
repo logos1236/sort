@@ -16,7 +16,7 @@ public class TimeExecute {
         stop_time = System.currentTimeMillis();
     }
 
-    public void getTimeExecute() {
-        System.out.println("Time execute: "+(stop_time - start_time));
+    public long getTimeExecute() {
+        return stop_time - start_time;
     }
 }

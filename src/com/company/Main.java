@@ -1,26 +1,24 @@
 package com.company;
 
-import com.company.sortArray.Bubble;
-import com.company.sortArray.Insertion;
-import com.company.sortArray.SortArray;
+import com.company.sortArray.*;
 
 public class Main {
 
     public static void main(String[] args) {
         TimeExecute timer = new TimeExecute();
+        int array_size = 2000;
+        int[] unsorted_array = TestArray.getInstance(array_size).getArray();
 
-        /*Bubble sortBubble = new Bubble(TestArray.getInstance(20000).getArray().clone());
-        timer.startTimer();
-        sortBubble.sort();
-        timer.stopTimer();
-        timer.getTimeExecute();*/
+        Bubble sortBubble = new Bubble(unsorted_array.clone());
+        TestArray.testSpeedSort(sortBubble);
 
-        Insertion sortInsertion = new Insertion(TestArray.getInstance(200000).getArray().clone());
-        timer.startTimer();
-        sortInsertion.sort();
-        timer.stopTimer();
-        timer.getTimeExecute();
+        Insertion sortInsertion = new Insertion(unsorted_array.clone());
+        TestArray.testSpeedSort(sortInsertion);
 
-        //TestArray.printArray(sortInsertion.getArray());
+        Select sortSelect = new Select(unsorted_array.clone());
+        TestArray.testSpeedSort(sortSelect);
+
+        Quick sortQuick = new Quick(unsorted_array.clone());
+        TestArray.testSpeedSort(sortQuick);
     }
 }

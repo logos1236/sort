@@ -63,4 +63,11 @@ public class Quick extends SortArray {
             return test_array;
         }
     }
+
+    @Override
+    public String getInfo() {
+        int n = this.getArray().length;
+
+        return "Best:"+n*Math.log(n)+"; Average:"+n*Math.log(n)+"; Worst:"+Math.pow(n,2)+";";
+    }
 }

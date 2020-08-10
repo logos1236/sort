@@ -50,12 +50,25 @@ public class TestArray {
         System.out.println("===============");
     }
 
+    public static void printArray(int[][] test_arr) {
+        System.out.println("===============");
+        for (int i = 0; i < test_arr.length; i++) {
+            if (test_arr[i] != null) {
+                for (int j = 0; j < test_arr[i].length; j++) {
+                    System.out.print(test_arr[i][j] + " ");
+                }
+            }
+            System.out.println("");
+        }
+        System.out.println("===============");
+    }
+
     public static void testSpeedSort(SortArray obj) {
         TimeExecute timer = new TimeExecute();
         timer.startTimer();
         obj.sort();
         timer.stopTimer();
 
-        System.out.println(obj.getClass().getSimpleName()+": "+timer.getTimeExecute());
+        System.out.println(obj.getClass().getSimpleName()+": "+timer.getTimeExecute()+"; "+obj.getInfo());
     }
 }

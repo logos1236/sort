@@ -5,8 +5,7 @@ import com.company.sortArray.*;
 public class Main {
 
     public static void main(String[] args) {
-        TimeExecute timer = new TimeExecute();
-        int array_size = 2000;
+        int array_size = 100;
         int[] unsorted_array = TestArray.getInstance(array_size).getArray();
 
         Bubble sortBubble = new Bubble(unsorted_array.clone());
@@ -17,6 +16,9 @@ public class Main {
 
         Select sortSelect = new Select(unsorted_array.clone());
         TestArray.testSpeedSort(sortSelect);
+
+        Merge sortMerge = new Merge(unsorted_array.clone());
+        TestArray.testSpeedSort(sortMerge);
 
         Quick sortQuick = new Quick(unsorted_array.clone());
         TestArray.testSpeedSort(sortQuick);

@@ -20,4 +20,11 @@ public class Bubble extends SortArray {
             }
         }
     }
+
+    @Override
+    public String getInfo() {
+        int n = this.getArray().length;
+
+        return "Best:"+n+"; Average:"+Math.pow(n,2)+"; Worst:"+Math.pow(n,2)+";";
+    }
 }

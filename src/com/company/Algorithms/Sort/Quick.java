@@ -1,15 +1,19 @@
-package com.company.sortArray;
+package com.company.Algorithms.Sort;
+
+import com.company.Algorithms.AlgorithmSort;
 
 import java.util.Arrays;
 
-public class Quick extends SortArray {
+public class Quick extends AlgorithmSort {
     public Quick(int[] test_array) {
         super(test_array);
     }
 
     @Override
-    public void sort() {
+    public int start() {
         splitArray(this.getArray());
+
+        return 1;
     }
 
     public static int[] splitArray(int[] test_array) {

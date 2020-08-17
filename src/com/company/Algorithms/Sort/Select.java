@@ -1,12 +1,14 @@
-package com.company.sortArray;
+package com.company.Algorithms.Sort;
 
-public class Select extends SortArray {
+import com.company.Algorithms.AlgorithmSort;
+
+public class Select extends AlgorithmSort {
     public Select(int[] test_array) {
         super(test_array);
     }
 
     @Override
-    public void sort() {
+    public int start() {
         boolean proceed = true;
         int smallest_index = 0;
         int smallest_val = 0;
@@ -23,13 +25,15 @@ public class Select extends SortArray {
                 }
             }
 
-            SortArray.swap(this.getArray(), start_i, smallest_index);
+            AlgorithmSort.swap(this.getArray(), start_i, smallest_index);
             start_i++;
 
             if (start_i == this.getArray().length -1) {
                 proceed = false;
             }
         }
+
+        return 1;
     }
 
     @Override

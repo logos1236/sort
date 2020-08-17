@@ -1,26 +1,66 @@
 package com.company;
 
-import com.company.sortArray.*;
+import com.company.Algorithms.Algorithm;
+import com.company.Algorithms.Sort.*;
+import com.company.Supp.Heap;
 
 public class Main {
 
     public static void main(String[] args) {
-        int array_size = 100;
+        int array_size = 10000;
         int[] unsorted_array = TestArray.getInstance(array_size).getArray();
 
-        Bubble sortBubble = new Bubble(unsorted_array.clone());
-        TestArray.testSpeedSort(sortBubble);
+        /*Algorithm sortBubble = new Bubble(unsorted_array.clone());
+        TestArray.testSpeed(sortBubble);
 
-        Insertion sortInsertion = new Insertion(unsorted_array.clone());
-        TestArray.testSpeedSort(sortInsertion);
+        Algorithm sortInsertion = new Insertion(unsorted_array.clone());
+        TestArray.testSpeed(sortInsertion);
 
-        Select sortSelect = new Select(unsorted_array.clone());
-        TestArray.testSpeedSort(sortSelect);
+        Algorithm sortSelect = new Select(unsorted_array.clone());
+        TestArray.testSpeed(sortSelect);
 
-        Merge sortMerge = new Merge(unsorted_array.clone());
-        TestArray.testSpeedSort(sortMerge);
+        Algorithm sortMerge = new Merge(unsorted_array.clone());
+        TestArray.testSpeed(sortMerge);
 
-        Quick sortQuick = new Quick(unsorted_array.clone());
-        TestArray.testSpeedSort(sortQuick);
+        Algorithm sortQuick = new Quick(unsorted_array.clone());
+        TestArray.testSpeed(sortQuick);
+
+        Algorithm sortShell = new Shell(unsorted_array.clone());
+        TestArray.testSpeed(sortShell);
+
+        Algorithm sortHeap = new HeapSort(unsorted_array.clone());
+        TestArray.testSpeed(sortHeap);*/
+
+        /*Algorithm serachLinear = new Linear(unsorted_array.clone(), 25);
+        TestArray.testSpeed(serachLinear);*/
+
+        //System.out.println(Heap.getParentIndex(2));
+
+        Heap test_heap = new Heap();
+
+        test_heap.add(6);
+        test_heap.add(15);
+        test_heap.add(11);
+        test_heap.add(6);
+        test_heap.add(9);
+        test_heap.add(20);
+        test_heap.add(7);
+        test_heap.add(8);
+        test_heap.add(6);
+        test_heap.add(1);
+        test_heap.add(3);
+        test_heap.add(5);
+        test_heap.add(17);
+
+        test_heap.print();
+
+        test_heap.delete(0);
+        test_heap.print();
+
+        test_heap.delete(0);
+        test_heap.print();
+
+        test_heap.delete(0);
+        test_heap.print();
     }
 }

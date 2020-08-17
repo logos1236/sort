@@ -1,12 +1,14 @@
-package com.company.sortArray;
+package com.company.Algorithms.Sort;
 
-public class Bubble extends SortArray {
+import com.company.Algorithms.AlgorithmSort;
+
+public class Bubble extends AlgorithmSort {
     public Bubble(int[] test_array) {
         super(test_array);
     }
 
     @Override
-    public void sort() {
+    public int start() {
         boolean proceed = true;
 
         while (proceed) {
@@ -14,11 +16,13 @@ public class Bubble extends SortArray {
 
             for(int i = 1; i < this.getArray().length; i++) {
                 if (this.getArray()[i] < this.getArray()[i-1]) {
-                    SortArray.swap(this.getArray(), i, i-1);
+                    AlgorithmSort.swap(this.getArray(), i, i-1);
                     proceed = true;
                 }
             }
         }
+
+        return 1;
     }
 
     @Override

@@ -1,20 +1,21 @@
 package com.company;
 
-import com.company.sortArray.SortArray;
+import com.company.Algorithms.Algorithm;
+import com.company.Algorithms.AlgorithmSort;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TestArray {
     private static TestArray instance;
     private int[] test_arr;
-    public static int[] test_arr_static = {1,22,4,38,147,6,25,5,9,10};
+    public static int[] test_arr_static = {32,95,16,82,24,66,35,19,75,54,40,43,93,68};
     private static int test_array_size = 10000;
 
     private void setArray(int array_size) {
         test_arr = new int[array_size];
 
         for (int i = 0; i < array_size; i++) {
-            test_arr[i] = ThreadLocalRandom.current().nextInt(0, 10000);
+            test_arr[i] = ThreadLocalRandom.current().nextInt(0, 1000000);
         }
     }
 
@@ -63,12 +64,12 @@ public class TestArray {
         System.out.println("===============");
     }
 
-    public static void testSpeedSort(SortArray obj) {
+    public static void testSpeed(Algorithm obj) {
         TimeExecute timer = new TimeExecute();
         timer.startTimer();
-        obj.sort();
+        int result = obj.start();
         timer.stopTimer();
 
-        System.out.println(obj.getClass().getSimpleName()+": "+timer.getTimeExecute()+"; "+obj.getInfo());
+        System.out.println(obj.getClass().getSimpleName()+": "+timer.getTimeExecute()+ "; Result: "+result);
     }
 }

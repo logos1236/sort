@@ -1,6 +1,8 @@
-package com.company.sortArray;
+package com.company.Algorithms.Sort;
 
-public class Insertion extends SortArray {
+import com.company.Algorithms.AlgorithmSort;
+
+public class Insertion extends AlgorithmSort {
     public Insertion(int[] test_array) {
         super(test_array);
     }
@@ -19,12 +21,14 @@ public class Insertion extends SortArray {
     }
 
     @Override
-    public void sort() {
+    public int start() {
         for(int i = 1; i < this.getArray().length; i++) {
             if (this.getArray()[i] < this.getArray()[i-1]) {
                 findTruePlace(this.getArray()[i], i);
             }
         }
+
+        return 1;
     }
 
     @Override

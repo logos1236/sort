@@ -1,14 +1,14 @@
-package com.company.sortArray;
+package com.company.Algorithms.Sort;
 
-import com.company.TestArray;
+import com.company.Algorithms.AlgorithmSort;
 
-public class Merge extends SortArray  {
+public class Merge extends AlgorithmSort {
     public Merge(int[] test_array) {
         super(test_array);
     }
 
     @Override
-    public void sort() {
+    public int start() {
         int[][][] result = new int[(int)Math.ceil(this.getArray().length/2)][][];
         result[0] = new int[this.getArray().length][];
         for(int i=0; i<this.getArray().length; i++) {
@@ -40,6 +40,8 @@ public class Merge extends SortArray  {
 
             j++;
         }
+
+        return 1;
     }
 
     public static int[] processingArray() {

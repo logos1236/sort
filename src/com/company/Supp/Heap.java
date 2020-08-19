@@ -1,5 +1,7 @@
 package com.company.Supp;
 
+import com.company.TestArray;
+
 import java.util.Arrays;
 
 public class Heap {
@@ -51,7 +53,7 @@ public class Heap {
         }
     }
 
-    public void heap_shift_add(int index) {
+    public void heapShiftAdd(int index) {
         if (index > 0) {
             int parent_index = getParentIndex(index);
 
@@ -68,14 +70,14 @@ public class Heap {
 
     public void add(int value) {
         if (heap_list_size + 3 >= heap_list.length) {
-            heap_list = Arrays.copyOf(heap_list, heap_list.length*2);
+            heap_list = Arrays.copyOf(heap_list, (int)(heap_list.length*1.5));
         }
 
         heap_list[heap_list_size] = value;
         heap_list_size++;
 
         if (heap_list_size > 0) {
-            heap_shift_add(heap_list_size-1);
+            heapShiftAdd(heap_list_size-1);
         }
     }
 
@@ -106,10 +108,54 @@ public class Heap {
         System.out.println("=================");
     }
 
-    public static void testHeap() {
-        Heap test_heap = new Heap();
+    public static Heap heapUnion(Heap h1, Heap h2) {
+        while (h2.getSize() >0) {
+            h1.add(h2.getValue(0));
+            h2.delete(0);
+        }
 
-        test_heap.add(6);
+        return h1;
+    }
+
+    public boolean isRightHeap() {
+        boolean result = true;
+
+        for (int i=0; i < heap_list_size; i++) {
+            int left_child_index = getLeftСhildIndex(i);
+            int right_child_index = getRightСhildIndex(i);
+
+            if ((left_child_index < heap_list_size && heap_list[i] < heap_list[left_child_index]) ||
+                    (right_child_index < heap_list_size && heap_list[i] < heap_list[right_child_index])
+            ) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    public static void testHeap() {
+        int array_size = 10;
+        int[] unsorted_array = new TestArray(array_size).getArray();
+        int[] unsorted_array_1 = new TestArray(array_size).getArray();
+
+        Heap test_heap = new Heap();
+        for (int i=0; i < unsorted_array.length; i++) {
+            test_heap.add(unsorted_array[i]);
+        }
+        test_heap.print();
+
+        Heap test_heap_2 = new Heap();
+        for (int i=0; i < unsorted_array_1.length; i++) {
+            test_heap_2.add(unsorted_array_1[i]);
+        }
+        test_heap_2.print();
+
+        Heap test_heap_3 = heapUnion(test_heap, test_heap_2);
+        test_heap_3.print();
+
+        /*test_heap.add(6);
         test_heap.add(15);
         test_heap.add(11);
         test_heap.add(6);
@@ -132,6 +178,6 @@ public class Heap {
         test_heap.print();
 
         test_heap.delete(0);
-        test_heap.print();
+        test_heap.print();*/
     }
 }

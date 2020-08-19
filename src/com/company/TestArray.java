@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TestArray {
     private int[] test_arr;
-    public static int[] test_arr_static = {32,95,16,82,24,66,35,19,75,54,40,43,93,68};
+    private static int[] test_arr_static = {32,95,16,82,24,66,35,19,75,54,40,43,93,68};
     private static int array_default_size = 10000;
 
     private void setArray(int array_size) {

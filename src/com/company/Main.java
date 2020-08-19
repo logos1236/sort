@@ -7,7 +7,7 @@ import com.company.Supp.Heap;
 public class Main {
 
     public static void main(String[] args) {
-        int array_size = 10000;
+        int array_size = 10000000;
         int[] unsorted_array = new TestArray(array_size).getArray();
 
         /*Algorithm sortBubble = new Bubble(unsorted_array.clone());
@@ -20,7 +20,7 @@ public class Main {
         TestArray.testSpeed(sortSelect);
 
         Algorithm sortMerge = new Merge(unsorted_array.clone());
-        TestArray.testSpeed(sortMerge);
+        TestArray.testSpeed(sortMerge);*/
 
         Algorithm sortQuick = new Quick(unsorted_array.clone());
         TestArray.testSpeed(sortQuick);
@@ -29,9 +29,9 @@ public class Main {
         TestArray.testSpeed(sortShell);
 
         Algorithm sortHeap = new HeapSort(unsorted_array.clone());
-        TestArray.testSpeed(sortHeap);*/
+        TestArray.testSpeed(sortHeap);
 
-        Heap.testHeap();
+        //Heap.testHeap();
 
         /*Algorithm serachLinear = new Linear(unsorted_array.clone(), 25);
         TestArray.testSpeed(serachLinear);*/

@@ -27,25 +27,43 @@ public class Heap {
         return (int)Math.floor(((index-1)/2));
     }
 
-    public void heapfy(int index) {
-        int parent_index = getParentIndex(index);
-        int left_child_index = getLeftСhildIndex(index);
-        int right_child_index = getRightСhildIndex(index);
+    public void heapify(int index) {
+        if ((index >= 0) && (index < heap_list_size)) {
+            int left_child_index = getLeftСhildIndex(index);
+            int right_child_index = getRightСhildIndex(index);
+            int max_child_index = index;
 
-        if ((index < heap_list_size) && (heap_list[parent_index] < heap_list[index])) {
-            int start_val = heap_list[parent_index];
-            heap_list[parent_index] = heap_list[index];
-            heap_list[index] = start_val;
+            if ((left_child_index < heap_list_size) && (heap_list[left_child_index] > heap_list[max_child_index])) {
+                max_child_index = left_child_index;
+            }
 
-            heapfy(parent_index);
+            if ((right_child_index < heap_list_size) && (heap_list[right_child_index] > heap_list[max_child_index])) {
+                max_child_index = right_child_index;
+            }
+
+            if (max_child_index != index) {
+                int start_val = heap_list[max_child_index];
+                heap_list[max_child_index] = heap_list[index];
+                heap_list[index] = start_val;
+
+                heapify(max_child_index);
+            }
         }
+    }
 
-        /*if ((left_child_index < heap_list_size) && (heap_list[parent_index] < heap_list[left_child_index])) {
-            heapfy(left_child_index);
+    public void heap_shift_add(int index) {
+        if (index > 0) {
+            int parent_index = getParentIndex(index);
+
+            while (heap_list[index] > heap_list[parent_index]) {
+                int start_val = heap_list[parent_index];
+                heap_list[parent_index] = heap_list[index];
+                heap_list[index] = start_val;
+
+                index = parent_index;
+                parent_index = getParentIndex(index);
+            }
         }
-        if ((right_child_index < heap_list_size) && (heap_list[parent_index] < heap_list[right_child_index])) {
-            heapfy(right_child_index);
-        }*/
     }
 
     public void add(int value) {
@@ -57,19 +75,15 @@ public class Heap {
         heap_list_size++;
 
         if (heap_list_size > 0) {
-            heapfy(heap_list_size-1);
+            heap_shift_add(heap_list_size-1);
         }
     }
 
     public void delete(int index) {
-        for (int i = index; i < (heap_list_size-1); i++) {
-            heap_list[i] = heap_list[i+1];
-        }
-
+        heap_list[index] = heap_list[heap_list_size-1];
         heap_list_size--;
 
-        //=== Last leaf
-
+        heapify(index);
     }
 
     public void print() {
@@ -90,5 +104,34 @@ public class Heap {
         }
         System.out.println("");
         System.out.println("=================");
+    }
+
+    public static void testHeap() {
+        Heap test_heap = new Heap();
+
+        test_heap.add(6);
+        test_heap.add(15);
+        test_heap.add(11);
+        test_heap.add(6);
+        test_heap.add(9);
+        test_heap.add(20);
+        test_heap.add(7);
+        test_heap.add(8);
+        test_heap.add(6);
+        test_heap.add(1);
+        test_heap.add(3);
+        test_heap.add(5);
+        test_heap.add(17);
+
+        test_heap.print();
+
+        test_heap.delete(0);
+        test_heap.print();
+
+        test_heap.delete(0);
+        test_heap.print();
+
+        test_heap.delete(0);
+        test_heap.print();
     }
 }

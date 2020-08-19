@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.Algorithms.Algorithm;
-import com.company.Algorithms.AlgorithmSort;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -9,7 +8,7 @@ public class TestArray {
     private static TestArray instance;
     private int[] test_arr;
     public static int[] test_arr_static = {32,95,16,82,24,66,35,19,75,54,40,43,93,68};
-    private static int test_array_size = 10000;
+    private static int array_default_size = 10000;
 
     private void setArray(int array_size) {
         test_arr = new int[array_size];
@@ -19,13 +18,13 @@ public class TestArray {
         }
     }
 
-    private TestArray(int test_array_size) {
-        setArray(test_array_size);
+    private TestArray(int array_default_size) {
+        setArray(array_default_size);
     }
 
-    public static TestArray getInstance(int test_array_size) {
+    public static TestArray getInstance(int array_default_size) {
         if (instance == null) {
-            instance = new TestArray(test_array_size);
+            instance = new TestArray(array_default_size);
         }
 
         return instance;
@@ -33,7 +32,7 @@ public class TestArray {
 
     public static TestArray getInstance() {
         if (instance == null) {
-            instance = new TestArray(test_array_size);
+            instance = new TestArray(array_default_size);
         }
 
         return instance;
@@ -41,6 +40,10 @@ public class TestArray {
 
     public int[] getArray() {
         return test_arr;
+    }
+
+    public static int[] getTestArray() {
+        return test_arr_static;
     }
 
     public static void printArray(int[] test_arr) {

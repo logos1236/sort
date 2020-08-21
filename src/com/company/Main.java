@@ -2,7 +2,7 @@ package com.company;
 
 import com.company.Algorithms.Algorithm;
 import com.company.Algorithms.Sort.*;
-import com.company.Supp.Heap;
+import com.company.Entity.BinaryTree;
 
 public class Main {
 
@@ -20,7 +20,7 @@ public class Main {
         TestArray.testSpeed(sortSelect);
 
         Algorithm sortMerge = new Merge(unsorted_array.clone());
-        TestArray.testSpeed(sortMerge);*/
+        TestArray.testSpeed(sortMerge);
 
         Algorithm sortQuick = new Quick(unsorted_array.clone());
         TestArray.testSpeed(sortQuick);
@@ -29,11 +29,13 @@ public class Main {
         TestArray.testSpeed(sortShell);
 
         Algorithm sortHeap = new HeapSort(unsorted_array.clone());
-        TestArray.testSpeed(sortHeap);
+        TestArray.testSpeed(sortHeap);*/
 
         //Heap.testHeap();
 
         /*Algorithm serachLinear = new Linear(unsorted_array.clone(), 25);
         TestArray.testSpeed(serachLinear);*/
+
+        BinaryTree.test();
     }
 }

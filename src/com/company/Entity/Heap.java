@@ -1,4 +1,4 @@
-package com.company.Supp;
+package com.company.Entity;
 
 import com.company.TestArray;
 

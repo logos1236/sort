@@ -1,7 +1,6 @@
 package com.company.Algorithms.Sort;
 
 import com.company.Algorithms.AlgorithmSort;
-import com.company.Supp.Heap;
 
 public class HeapSort extends AlgorithmSort {
     public HeapSort(int[] test_array) {
@@ -10,7 +9,7 @@ public class HeapSort extends AlgorithmSort {
 
     @Override
     public int start() {
-        com.company.Supp.Heap test_heap = new com.company.Supp.Heap();
+        com.company.Entity.Heap test_heap = new com.company.Entity.Heap();
         int[] result = new int[this.getArray().length];
 
         for (int i=0; i < this.getArray().length; i++) {

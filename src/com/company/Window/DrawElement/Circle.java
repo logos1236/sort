@@ -4,14 +4,19 @@ import java.awt.*;
 
 public class Circle extends DrawElement {
     private String text;
+    private static int radius = 50;
 
-    public Circle(int x, int y, int radius, Color color, String text) {
-        super(x, y, radius, color);
+    public Circle(int x, int y, Color color, String text) {
+        super(x, y, color);
         this.text = text;
     }
 
     public String getText() {
         return text;
+    }
+
+    public static int getRadius() {
+        return radius;
     }
 
     public static void drawCenteredString(Graphics g, String text, int rect_x, int rect_y, int rect_radius) {
@@ -31,8 +36,8 @@ public class Circle extends DrawElement {
     @Override
     public void paintComponent(Graphics2D g) {
         g.setColor(this.getColor());
-        g.fillOval(this.getX(), this.getY(), this.getRadius(), this.getRadius());
+        g.fillOval(this.getX(), this.getY(), getRadius(), this.getRadius());
 
-        drawCenteredString(g, this.getText(), this.getX(), this.getY(), this.getRadius());
+        drawCenteredString(g, this.getText(), this.getX(), this.getY(), getRadius());
     }
 }

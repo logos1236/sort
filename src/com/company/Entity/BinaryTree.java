@@ -3,12 +3,10 @@ package com.company.Entity;
 import com.company.Window.Draw;
 import com.company.Window.DrawElement.Circle;
 import com.company.Window.DrawElement.Line;
-import com.company.Window.DrawElement.LineType;
 import com.company.Window.Window;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class BinaryTree {
     public class BinaryTreeNode {
@@ -46,6 +44,10 @@ public class BinaryTree {
         return heap_list_size;
     }
 
+    public BinaryTreeNode getRoot() {
+        return root;
+    }
+
     public void add(int value) {
         if (heap_list_size == 0) {
             root = new BinaryTreeNode(value);
@@ -57,76 +59,32 @@ public class BinaryTree {
     }
 
     public void print() {
-        /*System.out.println("=================");
-
-        ArrayList<BinaryTreeNode> current_row = new ArrayList();
-        current_row.add(root);
-
-        while(!current_row.isEmpty()) {
-            ArrayList<BinaryTreeNode> temp = new ArrayList<>(current_row);
-            current_row = new ArrayList();
-            StringBuilder print_string = new StringBuilder();
-
-            for(BinaryTreeNode current_elem:temp) {
-                if (current_elem.getLeftChild() != null) {
-                    current_row.add(current_elem.getLeftChild());
-                }
-                if (current_elem.getRightChild() != null) {
-                    current_row.add(current_elem.getRightChild());
-                }
-
-                if (print_string.length() != 0) {
-                    print_string.append(" | ");
-                }
-                print_string.append(current_elem.getValue());
-            }
-
-            System.out.println(print_string);
-        }
-
-        System.out.println("");
-        System.out.println("=================");*/
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Draw draw = new Draw();
-
-                Color color = Color.BLUE;
-                int radius = 50;
-
-                int row_y_offset = 0;
-                int row_x_offset = 0;
-
-                ArrayList<BinaryTreeNode> current_row = new ArrayList();
-                current_row.add(root);
-                draw.addDrawElement(new Circle(row_x_offset, row_y_offset, radius, color, String.valueOf(root.getValue())));
-
-                while(!current_row.isEmpty()) {
-                    ArrayList<BinaryTreeNode> temp = new ArrayList<>(current_row);
-                    current_row = new ArrayList();
-
-                    for(BinaryTreeNode current_elem:temp) {
-                        if (current_elem.getLeftChild() != null) {
-                            current_row.add(current_elem.getLeftChild());
-                            draw.addDrawElement(new Line(row_x_offset, row_y_offset, radius, color, LineType.LEFT_CHILD));
-                            draw.addDrawElement(new Circle(row_x_offset, row_y_offset+radius + Line.getYoffset(), radius, color, String.valueOf(current_elem.getLeftChild().getValue())));
-                        }
-                        if (current_elem.getRightChild() != null) {
-                            current_row.add(current_elem.getRightChild());
-                            draw.addDrawElement(new Line(row_x_offset, row_y_offset, radius, color, LineType.RIGHT_CHILD));
-                            draw.addDrawElement(new Circle(row_x_offset+radius*2, row_y_offset+radius + Line.getYoffset(), radius, color, String.valueOf(current_elem.getRightChild().getValue())));
-                        }
-
-                        row_x_offset += radius*2;
-                    }
-
-                    row_y_offset += radius + Line.getYoffset();
-                    row_x_offset = 0;
-                }
+                int space_between_circles = getDepth();
+                drawNodeRegular(draw, getRoot(), 300, 0, space_between_circles);
 
                 new Window(draw);
             }
         });
+    }
+
+    public static void drawNodeRegular(Draw draw, BinaryTreeNode node, int start_x, int start_y, int space_between_circles) {
+        if (node != null) {
+            space_between_circles--;
+
+            draw.addDrawElement(new Circle(start_x, start_y, Color.BLUE, String.valueOf(node.getValue())));
+
+            if (node.getLeftChild() != null) {
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x-(int)(Circle.getRadius()*(space_between_circles-0.5)),start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, node.getLeftChild(), start_x-Circle.getRadius()*space_between_circles,start_y + Circle.getRadius()*2, space_between_circles);
+            }
+            if (node.getRightChild() != null) {
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x+(int)(Circle.getRadius()*(space_between_circles+0.5)),start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, node.getRightChild(), start_x+Circle.getRadius()*space_between_circles,start_y + Circle.getRadius()*2, space_between_circles);
+            }
+        }
     }
 
     private void addTo(int value, BinaryTreeNode node) {
@@ -145,9 +103,27 @@ public class BinaryTree {
         }
     }
 
+    public static int getDepthRegular(int depth, BinaryTreeNode node) {
+        if (node != null) {
+            depth++;
+            int max_depth = depth;
+
+            if (node.getLeftChild() != null) {
+                max_depth = getDepthRegular(depth, node.getLeftChild());
+            }
+            if (node.getRightChild() != null) {
+                int current_depth = getDepthRegular(depth, node.getLeftChild());
+                max_depth = (max_depth > current_depth) ? max_depth : current_depth;
+            }
+
+            depth = max_depth;
+        }
+
+        return depth;
+    }
+
     public int getDepth() {
-        //return (Math.log(this.heap_list_size)/Math.log(2));
-        return 0;
+        return getDepthRegular(0, this.getRoot());
     }
 
     public static void test() {
@@ -158,10 +134,14 @@ public class BinaryTree {
         tree.add(10);
         tree.add(3);
         tree.add(7);
-        /*tree.add(9);
-        tree.add(12);*/
+        tree.add(9);
+        tree.add(12);
+        tree.add(4);
+        tree.add(3);
+        tree.add(54);
+        tree.add(33);
 
-        System.out.print(tree.getDepth());
+        //System.out.print(getDepth(0, tree.getRoot()));
 
         tree.print();
     }

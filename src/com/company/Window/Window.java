@@ -1,12 +1,6 @@
 package com.company.Window;
 
-import com.company.Window.DrawElement.Circle;
-import com.company.Window.DrawElement.DrawElement;
-import com.company.Window.DrawElement.Line;
-import com.company.Window.DrawElement.LineType;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

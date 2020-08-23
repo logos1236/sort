@@ -1,8 +1,7 @@
 package com.company;
 
-import com.company.Algorithms.Algorithm;
-import com.company.Algorithms.Sort.*;
 import com.company.Entity.BinaryTree;
+import com.company.Entity.Heap;
 
 public class Main {
 
@@ -36,6 +35,7 @@ public class Main {
         /*Algorithm serachLinear = new Linear(unsorted_array.clone(), 25);
         TestArray.testSpeed(serachLinear);*/
 
+        //Heap.test();
         BinaryTree.test();
     }
 }

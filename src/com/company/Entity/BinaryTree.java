@@ -74,15 +74,18 @@ public class BinaryTree {
         if (node != null) {
             space_between_circles--;
 
+            int offset_x_circle = (int)(Circle.getRadius()*(space_between_circles-0.5));
+            int offset_x_line = (int)(Circle.getRadius()*(space_between_circles-0.5));
+
             draw.addDrawElement(new Circle(start_x, start_y, Color.BLUE, String.valueOf(node.getValue())));
 
             if (node.getLeftChild() != null) {
-                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x-(int)(Circle.getRadius()*(space_between_circles-0.5)),start_y + Circle.getRadius()*2));
-                drawNodeRegular(draw, node.getLeftChild(), start_x-Circle.getRadius()*space_between_circles,start_y + Circle.getRadius()*2, space_between_circles);
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x-offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, node.getLeftChild(), start_x-offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles);
             }
             if (node.getRightChild() != null) {
-                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x+(int)(Circle.getRadius()*(space_between_circles+0.5)),start_y + Circle.getRadius()*2));
-                drawNodeRegular(draw, node.getRightChild(), start_x+Circle.getRadius()*space_between_circles,start_y + Circle.getRadius()*2, space_between_circles);
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x+offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, node.getRightChild(), start_x+offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles);
             }
         }
     }
@@ -140,8 +143,6 @@ public class BinaryTree {
         tree.add(3);
         tree.add(54);
         tree.add(33);
-
-        //System.out.print(getDepth(0, tree.getRoot()));
 
         tree.print();
     }

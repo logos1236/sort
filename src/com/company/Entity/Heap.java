@@ -1,10 +1,16 @@
 package com.company.Entity;
 
 import com.company.TestArray;
+import com.company.Window.Draw;
+import com.company.Window.DrawElement.Circle;
+import com.company.Window.DrawElement.Line;
+import com.company.Window.Window;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 
-public class Heap {
+public class Heap implements Cloneable {
     private int[] heap_list = new int[10];
     private int heap_list_size = 0;
 
@@ -88,24 +94,40 @@ public class Heap {
         heapify(index);
     }
 
-    public void print() {
-        int last_pow = 1;
+    public int getDepth() {
+        return (int)Math.floor(Math.log(heap_list_size)/Math.log(2))+1;
+    }
 
-        System.out.println("=================");
-        for (int i=0; i < heap_list_size; i++) {
-            if (i == (Math.pow(2, last_pow)-1)) {
-                System.out.println("");
-                last_pow++;
-                System.out.print(heap_list[i]+" ");
-            } else {
-                System.out.print(heap_list[i]+" ");
-                if (i % 2 == 0) {
-                    System.out.print(" ");
-                }
+    public void drawNodeRegular(Draw draw, int node_index, int start_x, int start_y, int space_between_circles) {
+        if (node_index >= 0) {
+            space_between_circles--;
+
+            int offset_x_circle = (int)(Circle.getRadius()*(space_between_circles-0.5));
+            int offset_x_line = (int)(Circle.getRadius()*(space_between_circles-0.5));
+
+            draw.addDrawElement(new Circle(start_x, start_y, Color.BLUE, String.valueOf(heap_list[node_index])));
+
+            if (getLeftСhildIndex(node_index) < heap_list_size) {
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x-offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, getLeftСhildIndex(node_index), start_x-offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles);
+            }
+            if (getRightСhildIndex(node_index) < heap_list_size) {
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x+offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, getRightСhildIndex(node_index), start_x+offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles);
             }
         }
-        System.out.println("");
-        System.out.println("=================");
+    }
+
+    public void print() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Draw draw = new Draw();
+                int space_between_circles = getDepth();
+                drawNodeRegular(draw, 0, 300, 0, space_between_circles);
+
+                new Window(draw);
+            }
+        });
     }
 
     public static Heap heapUnion(Heap h1, Heap h2) {
@@ -117,7 +139,7 @@ public class Heap {
         return h1;
     }
 
-    public boolean isRightHeap() {
+    public boolean isTrueHeap() {
         boolean result = true;
 
         for (int i=0; i < heap_list_size; i++) {
@@ -135,8 +157,8 @@ public class Heap {
         return result;
     }
 
-    public static void testHeap() {
-        int array_size = 10;
+    public static void test() {
+        /*int array_size = 10;
         int[] unsorted_array = new TestArray(array_size).getArray();
         int[] unsorted_array_1 = new TestArray(array_size).getArray();
 
@@ -153,15 +175,19 @@ public class Heap {
         test_heap_2.print();
 
         Heap test_heap_3 = heapUnion(test_heap, test_heap_2);
-        test_heap_3.print();
+        test_heap_3.print();*/
 
-        /*test_heap.add(6);
+        Heap test_heap = new Heap();
+        test_heap.add(6);
+
         test_heap.add(15);
         test_heap.add(11);
+
         test_heap.add(6);
         test_heap.add(9);
         test_heap.add(20);
         test_heap.add(7);
+
         test_heap.add(8);
         test_heap.add(6);
         test_heap.add(1);
@@ -171,7 +197,7 @@ public class Heap {
 
         test_heap.print();
 
-        test_heap.delete(0);
+        /*test_heap.delete(0);
         test_heap.print();
 
         test_heap.delete(0);
@@ -179,5 +205,7 @@ public class Heap {
 
         test_heap.delete(0);
         test_heap.print();*/
+
+
     }
 }

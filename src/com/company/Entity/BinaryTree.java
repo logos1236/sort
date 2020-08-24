@@ -58,38 +58,6 @@ public class BinaryTree {
         heap_list_size++;
     }
 
-    public void print() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                Draw draw = new Draw();
-                int space_between_circles = getDepth();
-                drawNodeRegular(draw, getRoot(), 300, 0, space_between_circles);
-
-                new Window(draw);
-            }
-        });
-    }
-
-    public static void drawNodeRegular(Draw draw, BinaryTreeNode node, int start_x, int start_y, int space_between_circles) {
-        if (node != null) {
-            space_between_circles--;
-
-            int offset_x_circle = (int)(Circle.getRadius()*(space_between_circles-0.5));
-            int offset_x_line = (int)(Circle.getRadius()*(space_between_circles-0.5));
-
-            draw.addDrawElement(new Circle(start_x, start_y, Color.BLUE, String.valueOf(node.getValue())));
-
-            if (node.getLeftChild() != null) {
-                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x-offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
-                drawNodeRegular(draw, node.getLeftChild(), start_x-offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles);
-            }
-            if (node.getRightChild() != null) {
-                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLUE, start_x+offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
-                drawNodeRegular(draw, node.getRightChild(), start_x+offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles);
-            }
-        }
-    }
-
     private void addTo(int value, BinaryTreeNode node) {
         if (value <= node.getValue()) {
             if (node.getLeftChild() == null) {
@@ -106,6 +74,40 @@ public class BinaryTree {
         }
     }
 
+    public void print() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Draw draw = new Draw();
+                int space_between_circles = getDepth();
+                drawNodeRegular(draw, getRoot(), 300, 0, space_between_circles, Color.BLACK);
+
+                new Window(draw);
+            }
+        });
+    }
+
+    public static void drawNodeRegular(Draw draw, BinaryTreeNode node, int start_x, int start_y, int space_between_circles, Color color) {
+        if (node != null) {
+            space_between_circles--;
+
+            int offset_x_circle = (int)(Circle.getRadius()*(space_between_circles-0.5));
+            int offset_x_line = (int)(Circle.getRadius()*(space_between_circles-0.5));
+
+            draw.addDrawElement(new Circle(start_x, start_y, color, String.valueOf(node.getValue())));
+
+            if (node.getLeftChild() != null) {
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLACK, start_x-offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, node.getLeftChild(), start_x-offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles, Color.BLACK);
+            }
+            if (node.getRightChild() != null) {
+                System.out.println(space_between_circles);
+
+                draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.RED, start_x+Circle.getRadius()/2+offset_x_line,start_y + Circle.getRadius()*2));
+                drawNodeRegular(draw, node.getRightChild(), start_x+offset_x_circle,start_y + Circle.getRadius()*2, space_between_circles, Color.RED);
+            }
+        }
+    }
+
     public static int getDepthRegular(int depth, BinaryTreeNode node) {
         if (node != null) {
             depth++;
@@ -115,7 +117,7 @@ public class BinaryTree {
                 max_depth = getDepthRegular(depth, node.getLeftChild());
             }
             if (node.getRightChild() != null) {
-                int current_depth = getDepthRegular(depth, node.getLeftChild());
+                int current_depth = getDepthRegular(depth, node.getRightChild());
                 max_depth = (max_depth > current_depth) ? max_depth : current_depth;
             }
 
@@ -129,10 +131,14 @@ public class BinaryTree {
         return getDepthRegular(0, this.getRoot());
     }
 
+    public int searchValue(int val) {
+        
+    }
+
     public static void test() {
         BinaryTree tree = new BinaryTree();
 
-        tree.add(8);
+        /*tree.add(8);
         tree.add(4);
         tree.add(10);
         tree.add(3);
@@ -142,7 +148,13 @@ public class BinaryTree {
         tree.add(4);
         tree.add(3);
         tree.add(54);
-        tree.add(33);
+        tree.add(33);*/
+
+        tree.add(1);
+        tree.add(11);
+        tree.add(32);
+        tree.add(46);
+        tree.add(48);
 
         tree.print();
     }

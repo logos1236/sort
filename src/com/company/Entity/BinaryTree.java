@@ -131,14 +131,31 @@ public class BinaryTree {
         return getDepthRegular(0, this.getRoot());
     }
 
-    public int searchValue(int val) {
-        
+    public BinaryTreeNode searchValue(int val) {
+        return searchValueRecurse(val, this.getRoot());
+    }
+
+    private static BinaryTreeNode searchValueRecurse(int val, BinaryTreeNode node) {
+        BinaryTreeNode result = null;
+        if (node != null) {
+            if (node.getValue() != val) {
+                if (val < node.getValue()) {
+                    result = searchValueRecurse(val, node.getLeftChild());
+                } else {
+                    result = searchValueRecurse(val, node.getRightChild());
+                }
+            } else {
+                result = node;
+            }
+        }
+
+        return result;
     }
 
     public static void test() {
         BinaryTree tree = new BinaryTree();
 
-        /*tree.add(8);
+        tree.add(8);
         tree.add(4);
         tree.add(10);
         tree.add(3);
@@ -148,14 +165,8 @@ public class BinaryTree {
         tree.add(4);
         tree.add(3);
         tree.add(54);
-        tree.add(33);*/
+        tree.add(33);
 
-        tree.add(1);
-        tree.add(11);
-        tree.add(32);
-        tree.add(46);
-        tree.add(48);
-
-        tree.print();
+        System.out.print(tree.searchValue(54));
     }
 }

@@ -118,22 +118,24 @@ public class BinaryTree {
     }
 
     private void addRecurse(int value, BinaryTreeNode node) {
-        if (value <= node.getValue()) {
-            if (node.getLeftChild() == null) {
-                BinaryTreeNode new_node = new BinaryTreeNode(value);
-                node.setLeftChild(new_node);
+        if (value != node.getValue()) {
+            if (value <= node.getValue()) {
+                if (node.getLeftChild() == null) {
+                    BinaryTreeNode new_node = new BinaryTreeNode(value);
+                    node.setLeftChild(new_node);
+                } else {
+                    addRecurse(value, node.getLeftChild());
+                }
             } else {
-                addRecurse(value, node.getLeftChild());
+                if (node.getRightChild() == null) {
+                    BinaryTreeNode new_node = new BinaryTreeNode(value);
+                    node.setRightChild(new_node);
+                } else {
+                    addRecurse(value, node.getRightChild());
+                }
             }
-        } else {
-            if (node.getRightChild() == null) {
-                BinaryTreeNode new_node = new BinaryTreeNode(value);
-                node.setRightChild(new_node);
-            } else {
-                addRecurse(value, node.getRightChild());
-            }
+            node.height++;
         }
-        node.height++;
     }
 
     public void print() {
@@ -408,7 +410,7 @@ public class BinaryTree {
     public static void test() {
         BinaryTree tree = new BinaryTree();
 
-        int array_size = 20;
+        /*int array_size = 20;
         int[] unsorted_array = new TestArray(array_size).getArray();
 
         for(int i:unsorted_array) {
@@ -417,18 +419,21 @@ public class BinaryTree {
 
         tree.print();
         tree.normalizeTree();
-        tree.print();
+        tree.print();*/
 
-        /*tree.add(100);
-        tree.add(150);
-
+        tree.add(100);
 
         tree.add(160);
         tree.add(170);
         tree.add(190);
+        tree.add(160);
+        tree.add(160);
+        tree.add(160);
         tree.print();
 
-        tree.normalizeTree();
-        tree.print();*/
+        //tree.normalizeTree();
+        //tree.print();
+
+        //System.out.println((tree.searchNodeByVal(190) != null) ? 1 : -1);
     }
 }

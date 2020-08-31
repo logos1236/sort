@@ -1,5 +1,6 @@
 package com.company.Entity;
 
+import com.company.TestArray;
 import com.company.Window.Draw;
 import com.company.Window.DrawElement.Circle;
 import com.company.Window.DrawElement.Line;
@@ -72,33 +73,6 @@ public class BinaryTree {
         public static int getHeight(BinaryTreeNode node) {
             return (node != null) ? node.height : 0;
         }
-
-        private int calculateNodeHeight() {
-            this.height = getDepthRecurse(this, -1);
-
-            this.calculateNodeHeightDownRecurse(this.height);
-            this.calculateNodeHeightUpRecurse(this.height);
-
-            return this.height;
-        }
-
-        private void calculateNodeHeightUpRecurse(int height){
-            this.height = height;
-            if (this.parent_node != null) {
-                this.parent_node.calculateNodeHeightUpRecurse(this.height + 1);
-            }
-        }
-
-        private void calculateNodeHeightDownRecurse(int prev_height){
-            this.height = prev_height;
-
-            if (this.left_child != null) {
-                this.left_child.calculateNodeHeightDownRecurse(this.height-1);
-            }
-            if (this.right_child != null) {
-                this.right_child.calculateNodeHeightDownRecurse(this.height-1);
-            }
-        }
     }
 
     private BinaryTreeNode root = null;
@@ -107,7 +81,7 @@ public class BinaryTree {
     public BinaryTree cloneTree() {
         BinaryTree new_tree = new BinaryTree();
         new_tree.root = cloneTreeRecurse(this.root);
-        new_tree.root.calculateNodeHeight();
+        new_tree.calculateDepth();
 
         return new_tree;
     }
@@ -148,7 +122,6 @@ public class BinaryTree {
             if (node.getLeftChild() == null) {
                 BinaryTreeNode new_node = new BinaryTreeNode(value);
                 node.setLeftChild(new_node);
-                new_node.calculateNodeHeight();
             } else {
                 addRecurse(value, node.getLeftChild());
             }
@@ -156,11 +129,11 @@ public class BinaryTree {
             if (node.getRightChild() == null) {
                 BinaryTreeNode new_node = new BinaryTreeNode(value);
                 node.setRightChild(new_node);
-                new_node.calculateNodeHeight();
             } else {
                 addRecurse(value, node.getRightChild());
             }
         }
+        node.height++;
     }
 
     public void print() {
@@ -185,7 +158,7 @@ public class BinaryTree {
             int offset_x_circle = (int)(Circle.getRadius()*(Math.abs(space_between_circles-0.5)));
             int offset_x_line = (int)(Circle.getRadius()*(Math.abs(space_between_circles-0.5)));
 
-            draw.addDrawElement(new Circle(start_x, start_y, color, String.valueOf(node.getValue())+"/"+String.valueOf(node.getHeight())+"/"+(node.parent_node!=null?node.parent_node.value:null)));
+            draw.addDrawElement(new Circle(start_x, start_y, color, String.valueOf(node.getValue())+"/"+String.valueOf(node.getHeight())));
 
             if (node.getLeftChild() != null) {
                 draw.addDrawElement(new Line(start_x+Circle.getRadius()/2, start_y+Circle.getRadius(), Color.BLACK, start_x-offset_x_line+Circle.getRadius()/2,start_y + Circle.getRadius()*2));
@@ -198,27 +171,27 @@ public class BinaryTree {
         }
     }
 
-    public int getDepth() {
-        return getDepthRecurse(this.getRoot(), -1);
+    public int calculateDepth() {
+        return calculateDepthRecurse(this.getRoot());
     }
 
-    private static int getDepthRecurse(BinaryTreeNode node, int prev_depth) {
-        if (node != null) {
-            prev_depth++;
-            int max_depth = prev_depth;
+    private static int calculateDepthRecurse(BinaryTreeNode node) {
+        int depth = -1;
 
+        if (node != null) {
             if (node.getLeftChild() != null) {
-                max_depth = getDepthRecurse(node.getLeftChild(), prev_depth);
+                depth = calculateDepthRecurse(node.getLeftChild());
             }
             if (node.getRightChild() != null) {
-                int current_depth = getDepthRecurse(node.getRightChild(), prev_depth);
-                max_depth = (max_depth > current_depth) ? max_depth : current_depth;
+                int current_depth = calculateDepthRecurse(node.getRightChild());
+                depth = (depth > current_depth) ? depth : current_depth;
             }
-
-            prev_depth = max_depth;
         }
+        depth++;
 
-        return prev_depth;
+        node.setHeight(depth);
+
+        return depth;
     }
 
     public BinaryTreeNode searchNodeByVal(int val) {
@@ -258,34 +231,34 @@ public class BinaryTree {
             BinaryTreeNode g = BinaryTreeNode.getRightChild(c);
 
             if (Math.abs(BinaryTreeNode.getHeight(b) - BinaryTreeNode.getHeight(c)) >= 2) {
-                    if (BinaryTreeNode.getHeight(f) <= BinaryTreeNode.getHeight(g) && (BinaryTreeNode.getHeight(f) != 0 || BinaryTreeNode.getHeight(g) != 0)) {
+                    if (BinaryTreeNode.getHeight(f) <= BinaryTreeNode.getHeight(g) && (f != null || g != null)) {
                         rotateLeft(a);
                     }
 
-                    if ((BinaryTreeNode.getHeight(f) > BinaryTreeNode.getHeight(g)) && (BinaryTreeNode.getHeight(f) != 0 || BinaryTreeNode.getHeight(g) != 0)) {
+                    if ((BinaryTreeNode.getHeight(f) > BinaryTreeNode.getHeight(g)) && (f != null || g != null)) {
                         rotateLeftBig(a);
                     }
 
-                    if ((BinaryTreeNode.getHeight(e) <= BinaryTreeNode.getHeight(d)) && (BinaryTreeNode.getHeight(e) != 0 || BinaryTreeNode.getHeight(d) != 0)) {
+                    if ((BinaryTreeNode.getHeight(e) <= BinaryTreeNode.getHeight(d)) && (e != null || d != null)) {
                         rotateRight(a);
                     }
 
-                    if ((BinaryTreeNode.getHeight(e) > BinaryTreeNode.getHeight(d)) && (BinaryTreeNode.getHeight(e) != 0 || BinaryTreeNode.getHeight(d) != 0)) {
+                    if ((BinaryTreeNode.getHeight(e) > BinaryTreeNode.getHeight(d)) && (e != null || d != null)) {
                         rotateRightBig(a);
                     }
 
-                if (b != null) {
-                    normalizeTreeRecurse(b);
-                }
-                if (c != null) {
-                    normalizeTreeRecurse(c);
-                }
+                    if (b != null) {
+                        normalizeTreeRecurse(b);
+                    }
+                    if (c != null) {
+                        normalizeTreeRecurse(c);
+                    }
             }
         }
     }
 
     private BinaryTreeNode rotateLeft(BinaryTreeNode a) {
-        BinaryTreeNode c = BinaryTreeNode.getLeftChild(a);
+        BinaryTreeNode c = BinaryTreeNode.getRightChild(a);
         BinaryTreeNode f = BinaryTreeNode.getLeftChild(c);
 
         int insert_pace_flag = 0;
@@ -309,7 +282,7 @@ public class BinaryTree {
         }
 
         if (c != null) {
-            c.calculateNodeHeight();
+            calculateDepth();
         }
 
         return c;
@@ -352,7 +325,7 @@ public class BinaryTree {
         }
 
         if (f != null) {
-            f.calculateNodeHeight();
+            calculateDepth();
         }
 
         return f;
@@ -383,7 +356,7 @@ public class BinaryTree {
         }
 
         if (b != null) {
-            b.calculateNodeHeight();
+            calculateDepth();
         }
 
         return b;
@@ -426,7 +399,7 @@ public class BinaryTree {
         }
 
         if (e != null) {
-            e.calculateNodeHeight();
+            calculateDepth();
         }
 
         return e;
@@ -435,18 +408,27 @@ public class BinaryTree {
     public static void test() {
         BinaryTree tree = new BinaryTree();
 
-        tree.add(100);
-        tree.add(50);
-        tree.add(40);
-        tree.add(60);
-        tree.add(70);
-        tree.add(55);
+        int array_size = 20;
+        int[] unsorted_array = new TestArray(array_size).getArray();
 
-        tree.add(150);
+        for(int i:unsorted_array) {
+            tree.add(i);
+        }
+
         tree.print();
-
         tree.normalizeTree();
         tree.print();
 
+        /*tree.add(100);
+        tree.add(150);
+
+
+        tree.add(160);
+        tree.add(170);
+        tree.add(190);
+        tree.print();
+
+        tree.normalizeTree();
+        tree.print();*/
     }
 }

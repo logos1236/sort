@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BinaryTree {
-    public class BinaryTreeNode {
+    public static class BinaryTreeNode {
         private BinaryTreeNode left_child = null;
         private BinaryTreeNode right_child = null;
         private BinaryTreeNode parent_node = null;
@@ -41,6 +41,9 @@ public class BinaryTree {
         public BinaryTreeNode getLeftChild() {
             return this.left_child;
         }
+        public static BinaryTreeNode getLeftChild(BinaryTreeNode node) {
+            return (node != null) ? node.left_child : null;
+        }
 
         public void setRightChild(BinaryTreeNode right_child) {
             this.right_child = right_child;
@@ -52,6 +55,9 @@ public class BinaryTree {
         public BinaryTreeNode getRightChild() {
             return this.right_child;
         }
+        public static BinaryTreeNode getRightChild(BinaryTreeNode node) {
+            return (node != null) ? node.right_child : null;
+        }
 
         public int getValue() {
             return this.value;
@@ -62,6 +68,9 @@ public class BinaryTree {
         }
         public int getHeight() {
             return this.height;
+        }
+        public static int getHeight(BinaryTreeNode node) {
+            return (node != null) ? node.height : 0;
         }
 
         private int calculateNodeHeight() {
@@ -233,22 +242,51 @@ public class BinaryTree {
         return result;
     }
 
-    private void normalizeTree(BinaryTreeNode node) {
-        if (node != null) {
-            int left_height = (node.left_child == null) ? 0 : node.left_child.height;
-            int right_height = (node.right_child == null) ? 0 : node.right_child.height;
+    public void normalizeTree() {
+        normalizeTreeRecurse(this.root);
+    }
 
-            if (Math.abs(left_height - right_height) >= 2) {
+    private void normalizeTreeRecurse(BinaryTreeNode a) {
+        if (a != null) {
+            BinaryTreeNode b = BinaryTreeNode.getLeftChild(a);
+            BinaryTreeNode c = BinaryTreeNode.getRightChild(a);
 
+            BinaryTreeNode d = BinaryTreeNode.getLeftChild(b);
+            BinaryTreeNode e = BinaryTreeNode.getRightChild(b);
+
+            BinaryTreeNode f = BinaryTreeNode.getLeftChild(c);
+            BinaryTreeNode g = BinaryTreeNode.getRightChild(c);
+
+            if (Math.abs(BinaryTreeNode.getHeight(b) - BinaryTreeNode.getHeight(c)) >= 2) {
+                    if (BinaryTreeNode.getHeight(f) <= BinaryTreeNode.getHeight(g) && (BinaryTreeNode.getHeight(f) != 0 || BinaryTreeNode.getHeight(g) != 0)) {
+                        rotateLeft(a);
+                    }
+
+                    if ((BinaryTreeNode.getHeight(f) > BinaryTreeNode.getHeight(g)) && (BinaryTreeNode.getHeight(f) != 0 || BinaryTreeNode.getHeight(g) != 0)) {
+                        rotateLeftBig(a);
+                    }
+
+                    if ((BinaryTreeNode.getHeight(e) <= BinaryTreeNode.getHeight(d)) && (BinaryTreeNode.getHeight(e) != 0 || BinaryTreeNode.getHeight(d) != 0)) {
+                        rotateRight(a);
+                    }
+
+                    if ((BinaryTreeNode.getHeight(e) > BinaryTreeNode.getHeight(d)) && (BinaryTreeNode.getHeight(e) != 0 || BinaryTreeNode.getHeight(d) != 0)) {
+                        rotateRightBig(a);
+                    }
+
+                if (b != null) {
+                    normalizeTreeRecurse(b);
+                }
+                if (c != null) {
+                    normalizeTreeRecurse(c);
+                }
             }
-
-            normalizeTree(node.parent_node);
         }
     }
 
     private BinaryTreeNode rotateLeft(BinaryTreeNode a) {
-        BinaryTreeNode c = a.right_child;
-        BinaryTreeNode f = (c != null) ? c.left_child : null;
+        BinaryTreeNode c = BinaryTreeNode.getLeftChild(a);
+        BinaryTreeNode f = BinaryTreeNode.getLeftChild(c);
 
         int insert_pace_flag = 0;
         BinaryTreeNode parent_node = a.parent_node;
@@ -278,12 +316,13 @@ public class BinaryTree {
     }
 
     private BinaryTreeNode rotateLeftBig(BinaryTreeNode a) {
-        BinaryTreeNode b = a.left_child;
-        BinaryTreeNode c = a.right_child;
-        BinaryTreeNode f = (c != null) ? c.left_child : null;
-        BinaryTreeNode g = (c != null) ? c.right_child : null;
-        BinaryTreeNode j = (f != null) ? f.left_child : null;
-        BinaryTreeNode k = (f != null) ? f.right_child : null;
+        BinaryTreeNode c = BinaryTreeNode.getRightChild(a);
+
+        BinaryTreeNode f = BinaryTreeNode.getLeftChild(c);
+        BinaryTreeNode g = BinaryTreeNode.getRightChild(c);
+
+        BinaryTreeNode j = BinaryTreeNode.getLeftChild(f);
+        BinaryTreeNode k = BinaryTreeNode.getRightChild(f);
 
         int insert_pace_flag = 0;
         BinaryTreeNode parent_node = a.parent_node;
@@ -320,8 +359,8 @@ public class BinaryTree {
     }
 
     private BinaryTreeNode rotateRight(BinaryTreeNode a) {
-        BinaryTreeNode b = a.left_child;
-        BinaryTreeNode e = (b != null) ? b.right_child : null;
+        BinaryTreeNode b = BinaryTreeNode.getLeftChild(a);
+        BinaryTreeNode e = BinaryTreeNode.getRightChild(b);
 
         int insert_pace_flag = 0;
         BinaryTreeNode parent_node = a.parent_node;
@@ -351,12 +390,13 @@ public class BinaryTree {
     }
 
     private BinaryTreeNode rotateRightBig(BinaryTreeNode a) {
-        BinaryTreeNode b = a.left_child;
-        BinaryTreeNode c = a.right_child;
-        BinaryTreeNode d = (b != null) ? b.left_child : null;
-        BinaryTreeNode e = (b != null) ? b.right_child : null;
-        BinaryTreeNode h = (e != null) ? e.left_child : null;
-        BinaryTreeNode i = (e != null) ? e.right_child : null;
+        BinaryTreeNode b = BinaryTreeNode.getLeftChild(a);
+
+        BinaryTreeNode d = BinaryTreeNode.getLeftChild(b);
+        BinaryTreeNode e = BinaryTreeNode.getRightChild(b);
+
+        BinaryTreeNode h = BinaryTreeNode.getLeftChild(e);
+        BinaryTreeNode i = BinaryTreeNode.getRightChild(e);
 
         int insert_pace_flag = 0;
         BinaryTreeNode parent_node = a.parent_node;
@@ -403,9 +443,10 @@ public class BinaryTree {
         tree.add(55);
 
         tree.add(150);
+        tree.print();
 
+        tree.normalizeTree();
         tree.print();
-        tree.rotateRightBig(tree.searchNodeByVal(100));
-        tree.print();
+
     }
 }

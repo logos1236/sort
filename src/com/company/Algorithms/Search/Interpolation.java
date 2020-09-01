@@ -1,12 +1,9 @@
 package com.company.Algorithms.Search;
 
-import com.company.Algorithms.Algorithm;
 import com.company.Algorithms.AlgorithmSearch;
-import com.company.Algorithms.Sort.Quick;
-import com.company.TestArray;
 
-public class Binary extends AlgorithmSearch {
-    public Binary(int[] test_array, int search_value) {
+public class Interpolation extends AlgorithmSearch {
+    public Interpolation(int[] test_array, int search_value) {
         super(test_array, search_value);
     }
 
@@ -16,7 +13,7 @@ public class Binary extends AlgorithmSearch {
     }
 
     private int searchRecurse(int start, int end) {
-        int center = (int)(Math.floor((end-start)/2))+start;
+        int center = start + ((getSearchValue() - getArray()[start])*(end - start))/(getArray()[end] - getArray()[start]);
 
         if ((center == start || center == end) && (getArray()[center] != getSearchValue())) {
             return -1;

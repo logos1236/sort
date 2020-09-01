@@ -7,9 +7,6 @@ import com.company.Algorithms.Sort.Quick;
 public class Jump extends AlgorithmSearch {
     public Jump(int[] test_array, int search_value) {
         super(test_array, search_value);
-
-        Algorithm sortQuick = new Quick(this.getArray());
-        sortQuick.start();
     }
 
     @Override

@@ -1,18 +1,15 @@
 package com.company;
 
 import com.company.Algorithms.Algorithm;
-import com.company.Algorithms.Search.Binary;
-import com.company.Algorithms.Search.Jump;
-import com.company.Algorithms.Search.Linear;
-import com.company.Algorithms.Search.Tree;
+import com.company.Algorithms.Search.*;
 import com.company.Entity.BinaryTree;
 import com.company.Entity.Heap;
 
 public class Main {
 
     public static void main(String[] args) {
-        int array_size = 100000;
-        int[] unsorted_array = new TestArray(array_size).getArray();
+        int array_size = 10000000;
+        TestArray test_array = new TestArray(array_size);
 
         /*Algorithm sortBubble = new Bubble(unsorted_array.clone());
         TestArray.testSpeed(sortBubble);
@@ -37,17 +34,20 @@ public class Main {
 
         //Heap.testHeap();
 
-        Algorithm serachLinear = new Linear(unsorted_array.clone(), 25);
-        TestArray.testSpeed(serachLinear);
-
         /*Algorithm searchTree = new Tree(unsorted_array.clone(), 25);
         TestArray.testSpeed(searchTree);*/
 
-        Algorithm searchBinary = new Binary(unsorted_array.clone(), 25);
+        Algorithm serachLinear = new Linear(test_array.getArray(false).clone(), 25);
+        TestArray.testSpeed(serachLinear);
+
+        Algorithm searchBinary = new Binary(test_array.getArray(true).clone(), 25);
         TestArray.testSpeed(searchBinary);
 
-        Algorithm searchJump = new Jump(unsorted_array.clone(), 25);
+        Algorithm searchJump = new Jump(test_array.getArray(true).clone(), 25);
         TestArray.testSpeed(searchJump);
+
+        Algorithm searchInterpolation = new Interpolation(test_array.getArray(true).clone(), 25);
+        TestArray.testSpeed(searchInterpolation);
 
         //Heap.test();
         //BinaryTree.test();

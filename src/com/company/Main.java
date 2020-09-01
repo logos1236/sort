@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Algorithms.Algorithm;
 import com.company.Algorithms.Search.Binary;
+import com.company.Algorithms.Search.Jump;
 import com.company.Algorithms.Search.Linear;
 import com.company.Algorithms.Search.Tree;
 import com.company.Entity.BinaryTree;
@@ -10,7 +11,7 @@ import com.company.Entity.Heap;
 public class Main {
 
     public static void main(String[] args) {
-        int array_size = 1000000;
+        int array_size = 100000;
         int[] unsorted_array = new TestArray(array_size).getArray();
 
         /*Algorithm sortBubble = new Bubble(unsorted_array.clone());
@@ -39,11 +40,14 @@ public class Main {
         Algorithm serachLinear = new Linear(unsorted_array.clone(), 25);
         TestArray.testSpeed(serachLinear);
 
-        //Algorithm searchTree = new Tree(unsorted_array.clone(), 25);
-        //TestArray.testSpeed(searchTree);
+        /*Algorithm searchTree = new Tree(unsorted_array.clone(), 25);
+        TestArray.testSpeed(searchTree);*/
 
         Algorithm searchBinary = new Binary(unsorted_array.clone(), 25);
         TestArray.testSpeed(searchBinary);
+
+        Algorithm searchJump = new Jump(unsorted_array.clone(), 25);
+        TestArray.testSpeed(searchJump);
 
         //Heap.test();
         //BinaryTree.test();

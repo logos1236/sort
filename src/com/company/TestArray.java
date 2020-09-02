@@ -60,7 +60,7 @@ public class TestArray {
     public static void printArray(int[] test_arr) {
         System.out.println("===============");
         for (int i = 0; i < test_arr.length; i++) {
-            System.out.println(test_arr[i]);
+            System.out.println(i+": "+test_arr[i]);
         }
         System.out.println("===============");
     }

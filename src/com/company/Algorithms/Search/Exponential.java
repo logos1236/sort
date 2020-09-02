@@ -2,10 +2,10 @@ package com.company.Algorithms.Search;
 
 import com.company.Algorithms.Algorithm;
 import com.company.Algorithms.AlgorithmSearch;
-import com.company.Algorithms.Sort.Quick;
+import com.company.TestArray;
 
-public class Jump extends AlgorithmSearch {
-    public Jump(int[] test_array, int search_value) {
+public class Exponential  extends AlgorithmSearch {
+    public Exponential(int[] test_array, int search_value) {
         super(test_array, search_value);
     }
 
@@ -13,28 +13,21 @@ public class Jump extends AlgorithmSearch {
     public int start() {
         int array_length = getArray().length;
         int step = (int)Math.sqrt(array_length);
-        int step_position = 0;
+        int step_position = 1;
         int result = -1;
 
         boolean stop = false;
         while(!stop) {
-            step_position += step;
+            step_position *= 2;
             if (step_position > array_length || getSearchValue() <= getArray()[step_position]) {
                 stop = true;
             }
         }
 
-        for (int i = step_position - step; i <= step_position; i++) {
-            if (getSearchValue() == getArray()[i]) {
-                result = 1;
-            }
-        }
+        int[] array_slice = java.util.Arrays.copyOfRange(getArray(), step_position/2, step_position+1);
 
-        return result;
-    }
+        Algorithm searchBinary = new Binary(array_slice, getSearchValue());
 
-    @Override
-    public String getInfo() {
-        return null;
+        return searchBinary.start();
     }
 }

@@ -12,14 +12,20 @@ public class Binary extends AlgorithmSearch {
 
     @Override
     public int start() {
-        return (searchRecurse(0, getArray().length-1) > 0) ? 1 : -1;
+        return (searchRecurse(0, getArray().length-1) >= 0) ? 1 : -1;
     }
 
     private int searchRecurse(int start, int end) {
         int center = (int)(Math.floor((end-start)/2))+start;
 
-        if ((center == start || center == end) && (getArray()[center] != getSearchValue())) {
-            return -1;
+        if (center == start || center == end) {
+            if (getArray()[start] == getSearchValue()) {
+                return start;
+            } else if (getArray()[end] == getSearchValue()) {
+                return end;
+            } else {
+                return -1;
+            }
         }
 
         if (getArray()[center] == getSearchValue()) {

@@ -8,7 +8,7 @@ import com.company.Entity.Heap;
 public class Main {
 
     public static void main(String[] args) {
-        int array_size = 10000000;
+        int array_size = 50000000;
         TestArray test_array = new TestArray(array_size);
 
         /*Algorithm sortBubble = new Bubble(unsorted_array.clone());
@@ -48,6 +48,9 @@ public class Main {
 
         Algorithm searchInterpolation = new Interpolation(test_array.getArray(true).clone(), 25);
         TestArray.testSpeed(searchInterpolation);
+
+        Algorithm searchExponential = new Exponential(test_array.getArray(true).clone(), 25);
+        TestArray.testSpeed(searchExponential);
 
         //Heap.test();
         //BinaryTree.test();

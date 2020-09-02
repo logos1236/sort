@@ -15,8 +15,14 @@ public class Interpolation extends AlgorithmSearch {
     private int searchRecurse(int start, int end) {
         int center = start + ((getSearchValue() - getArray()[start])*(end - start))/(getArray()[end] - getArray()[start]);
 
-        if ((center == start || center == end) && (getArray()[center] != getSearchValue())) {
-            return -1;
+        if (center == start || center == end) {
+            if (getArray()[start] == getSearchValue()) {
+                return start;
+            } else if (getArray()[end] == getSearchValue()) {
+                return end;
+            } else {
+                return -1;
+            }
         }
 
         if (getArray()[center] == getSearchValue()) {
